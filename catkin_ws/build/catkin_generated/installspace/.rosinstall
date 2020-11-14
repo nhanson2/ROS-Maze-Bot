@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/nathaniel/ROS-Maze-Bot/catkin_ws/install/setup.sh

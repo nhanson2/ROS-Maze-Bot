@@ -1,2 +1,0 @@
-maze_wanderer
--DCATKIN_DEVEL_PREFIX=/home/nathaniel/ROS-Maze-Bot/project/devel -DCMAKE_INSTALL_PREFIX=/home/nathaniel/ROS-Maze-Bot/project/install -G Unix Makefiles

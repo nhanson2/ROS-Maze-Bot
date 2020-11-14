@@ -11,10 +11,14 @@ System Specifications
 * ROS Neotic (Latest)
 
 ```
-export TURTLEBOT3_MODEL=burger
-cd <<GIT_DIR>>
+source /opt/ros/noetic/setup.bash 
+cd ~/ROS-Maze-Bot/catkin_ws
 catkin_make
-roslaunch <<PATH TO LAUNCH FILE>>
+export TURTLEBOT3_MODEL=burger
+### Launch Simulation Environment
+roslaunch fira_maze maze_1_world.launch
+### Launch Robot Controller
+rosrun fira_maze maze_explorer.py 
 ```
 
 ## Workflow

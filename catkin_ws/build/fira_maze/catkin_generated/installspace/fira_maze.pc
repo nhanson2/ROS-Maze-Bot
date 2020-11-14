@@ -1,0 +1,8 @@
+prefix=/home/nathaniel/ROS-Maze-Bot/catkin_ws/install
+
+Name: fira_maze
+Description: Description of fira_maze
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
