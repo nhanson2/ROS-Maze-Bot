@@ -10,6 +10,10 @@ System Specifications
 * Ubuntu 20.0.4 Focal Fossa
 * ROS Neotic (Latest)
 
+Package Dependencies
+* slam_gmapping     $ sudo apt install ros-noetic-slam-gmapping
+* map_server        $ sudo apt install ros-noetic-map-server
+
 ```
 source /opt/ros/noetic/setup.bash 
 cd ~/ROS-Maze-Bot/catkin_ws
@@ -17,8 +21,17 @@ catkin_make
 export TURTLEBOT3_MODEL=burger
 ### Launch Simulation Environment
 roslaunch fira_maze maze_1_world.launch
+### Launch SLAM gmapping
+roslaunch fira_maze turtlebot3_slam.launch
+### Launch rviz to visualize mapping
+rviz -d `rospack find turtlebot3_slam`/rviz/turtlebot3_gmapping.rviz
 ### Launch Robot Controller
 rosrun fira_maze maze_explorer.py 
+
+### After mapping is complete, save the map
+# replace <map_filename> with the filename you'd like to save for the map
+rosrun map_server map_saver -f /home/ubuntu/ROS-Maze-Bot/maps/<map_filename>
+# This outputs a .pgm and a .yaml
 ```
 
 ## Workflow
@@ -51,3 +64,6 @@ root.tex is the report TeX file. The generated pdf document can be viewed with a
 - Initial Project Setup
 - Further Configured Git Settings
 - Created additional users on Ubuntu server
+#### 11-16-2020
+- Updated README.md to include information on package dependencies, and instructions on utilizing slam, rviz, and mapping.
+- Added sample map files created in simulation to maps folder.
