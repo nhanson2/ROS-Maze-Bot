@@ -114,6 +114,7 @@ cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1) # move the robot
 scan_sub = rospy.Subscriber('scan', LaserScan, scan_callback)   # read the laser scanner
 imu_sub = rospy.Subscriber('imu', Imu, imu_callback)            # read the imu
 
+
 rospy.init_node('maze_explorer',)
 
 command = Twist()
@@ -139,14 +140,11 @@ while not rospy.is_shutdown():
         if(min_front > 0.2 and min_right > 0.2 and min_left > 0.25):    
             command.angular.z = 0.0    # if nothing near, go forward
             command.linear.x = 0.15
-            print("Moving Toward Wall")
         elif(min_left < 0.25):           # if wall on left, start tracking
-            state = 1       
-            print("Left Wall Detected, Tracking")   
+            state = 1        
             command.angular.z = 0.0
             command.linear.x = 0.0       
         else:
-            print("Wall Detected, Turning")
             turn_right()
             command.angular.z = 0.0
             command.linear.x = 0.0
@@ -154,20 +152,20 @@ while not rospy.is_shutdown():
         cmd_vel_pub.publish(command)
         
     else:   # left wall detected
-        if(min_front > 0.18):
+        if(min_front > 0.2):
             if(min_left > 0.3):  
                 print("Range: {:.2f}m - Opening on left, turn".format(min_left))
                 command.angular.z = 0.0
                 command.linear.x = 0.1
                 cmd_vel_pub.publish(command)
-                time.sleep(1.5)
+                time.sleep(2)
 
                 turn_left()
 
                 command.angular.z = 0.0
                 command.linear.x = 0.1
                 cmd_vel_pub.publish(command)
-                time.sleep(0.1)
+                time.sleep(0.25)
 
             else:
                 print("Range: {:.2f}m - Following Wall".format(min_left))

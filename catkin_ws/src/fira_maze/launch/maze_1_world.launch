@@ -35,7 +35,7 @@
     <param name="linearUpdate" value="0.2"/>
     <param name="angularUpdate" value="0.2"/>
     <param name="temporalUpdate" value="0.5"/>
-    <param name="delta" value="0.05"/>
+    <param name="delta" value="0.01"/>
     <param name="lskip" value="0"/>
     <param name="particles" value="120"/>
     <param name="sigma" value="0.05"/>
@@ -60,6 +60,6 @@
     <param name="lasamplestep" value="0.005"/>
   </node>
 
-  <node pkg="fira_maze" name="maze_explorer.py" type="maze_explorer.py" output="screen" /> 
+  <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_2.py" output="screen" /> 
 
 </launch>
