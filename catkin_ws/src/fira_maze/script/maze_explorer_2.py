@@ -106,7 +106,7 @@ min_left = 0
 i_left = 0
 
 yaw = 0.0
-des_ang = 0.0
+des_ang = math.pi/2
 kp = 1
 
 # Create the node
@@ -122,7 +122,7 @@ command.linear.x = 0.0
 command.angular.z = 0.0
 
 rate = rospy.Rate(10)
-time.sleep(5) # wait for node to initialize
+time.sleep(30) # wait for node to initialize
 
 state = 0
 
