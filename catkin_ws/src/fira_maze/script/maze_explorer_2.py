@@ -4,6 +4,7 @@ import rospy, time, math
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import Imu
+from nav_msgs.msg import Odometry
 from std_msgs.msg import String
 from tf.transformations import euler_from_quaternion
 
@@ -37,6 +38,12 @@ def imu_callback(msg):
     euler = euler_from_quaternion(quat)
 
     yaw = euler[2]
+
+def odom_callback(msg):
+    global map_position 
+
+    map_position = (msg.pose.pose.position.x, msg.pose.pose.position.y)
+
 
 def get_ang_err():
     global des_ang
@@ -109,11 +116,17 @@ yaw = 0.0
 des_ang = math.pi/2
 kp = 1
 
+map_position_init = ()
+odom_init = True
+init_map_time = 0.0
+err_tolerance = 0.1
+
+
 # Create the node
 cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1) # move the robot
 scan_sub = rospy.Subscriber('scan', LaserScan, scan_callback)   # read the laser scanner
 imu_sub = rospy.Subscriber('imu', Imu, imu_callback)            # read the imu
-
+odom_sub = rospy.Subscriber('odom', Odometry, odom_callback)    # read odometry information
 
 rospy.init_node('maze_explorer',)
 
@@ -135,6 +148,21 @@ state = 0
 state = 0
 
 while not rospy.is_shutdown():
+
+    if(odom_init == True):
+        map_position_init = map_position
+        odom_init = False
+        # Grab time
+        init_map_time = rospy.get_time()
+    
+    # THIS IS THE CODE THAT STOPS THE MAPPING PROCESS
+    if ((rospy.get_time() > (init_map_time + 60.0)) and (odom_init == False)):
+        #check current position against saved initial map position
+        position_err = (abs(map_position_init[0]-map_position[0]), abs(map_position_init[1]-map_position[1]))
+        #if error is low, mapping is done. Break the loop and save the map.
+        if ((position_err[0] < err_tolerance) and (position_err[1] < err_tolerance)):
+            print("all done, save the map now")
+            break
 
     while(state == 0 and not rospy.is_shutdown()):
         if(min_front > 0.2 and min_right > 0.2 and min_left > 0.25):    
@@ -182,3 +210,5 @@ while not rospy.is_shutdown():
         cmd_vel_pub.publish(command)
     # wait for the loop
     rate.sleep()
+
+### INSERT CODE HERE FOR SAVING THE MAP ###
