@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import rospy, time, math
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
@@ -181,7 +182,7 @@ while not rospy.is_shutdown():
         
     else:   # left wall detected
         if(min_front > 0.2):
-            if(min_left > 0.3):  
+            if(min_left > 0.25):  
                 print("Range: {:.2f}m - Opening on left, turn".format(min_left))
                 command.angular.z = 0.0
                 command.linear.x = 0.1
@@ -212,3 +213,5 @@ while not rospy.is_shutdown():
     rate.sleep()
 
 ### INSERT CODE HERE FOR SAVING THE MAP ###
+rospy.loginfo('Saving map!')
+os.open('rosrun map_server map_saver -f $(rospack find fira_maze)/maps/part_2_map')
