@@ -6,6 +6,7 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import Imu
 from nav_msgs.msg import Odometry
+from nav_msgs.msg import OccupancyGrid
 from std_msgs.msg import String
 from tf.transformations import euler_from_quaternion
 
@@ -42,9 +43,25 @@ def imu_callback(msg):
 
 def odom_callback(msg):
     global map_position 
-
     map_position = (msg.pose.pose.position.x, msg.pose.pose.position.y)
 
+def map_callback(msg):
+    global occ_map
+    global map_width
+    global map_height
+    global map_x
+    global map_y
+    global map_resolution
+
+    map_resolution = msg.info.resolution
+    map_width = msg.info.width
+    map_height = msg.info.height
+    map_x = msg.info.origin.position.x
+    map_y = msg.info.origin.position.y
+
+    occ_map = msg.data  # Map data access point as [x + y*w]
+
+    print("Map Origin: {} , {}".format(map_x,map_y))
 
 def get_ang_err():
     global des_ang
@@ -100,7 +117,50 @@ def turn_left():
     
     go_to_ang(0.0)
 
-    
+def get_left_dist():
+    x_base = round((map_position[0] - map_x)/map_resolution)
+    y_base = round((map_position[1] - map_y)/map_resolution)
+
+    if(abs(des_ang - 0.0) < 0.01):
+        check_x = x_base
+        while (check_x-x_base) > -30:
+            check_x = check_x - 1
+
+            for i in [-2, -1, 0, 1, 2]:
+                if(occ_map[check_x + ((y_base+i)*map_width)] > 50):
+                    return -(check_x-x_base)*map_resolution
+        return 0.3
+
+    elif(abs(des_ang - (math.pi/2)) < 0.01):
+        check_y = y_base
+        while (check_y-y_base) > -30:
+            check_y = check_y - 1
+
+            for i in [-2, -1, 0, 1, 2]:
+                if(occ_map[x_base + ((check_y+i)*map_width)] > 50):
+                    return -(check_y-y_base)*map_resolution
+        return 0.3
+
+    elif(abs(des_ang + (math.pi/2)) < 0.01):
+        check_y = y_base
+        while (check_y-y_base) < 30:
+            check_y = check_y + 1
+
+            for i in [-2, -1, 0, 1, 2]:
+                if(occ_map[x_base + ((check_y+i)*map_width)] > 50):
+                    return (check_y-y_base)*map_resolution
+        return 0.3
+
+    else:   # pi or -pi
+        check_x = x_base
+        while (check_x-x_base) < 30:
+            check_x = check_x + 1
+
+            for i in [-2, -1, 0, 1, 2]:
+                if(occ_map[check_x + ((y_base+i)*map_width)] > 50):
+                    return (check_x-x_base)*map_resolution
+        return 0.3
+
 
 # Initialize all variables
 range_front = []
@@ -113,6 +173,8 @@ i_right = 0
 min_left = 0
 i_left = 0
 
+left_dist = 0.0
+
 yaw = 0.0
 des_ang = math.pi/2
 kp = 1
@@ -122,9 +184,16 @@ odom_init = True
 init_map_time = 0.0
 err_tolerance = 0.1
 
+occ_map = []
+map_width = 0
+map_height = 0
+map_x = 0
+map_y = 0
+map_resolution = 0
+
 save_position = (0.0, 0.0)
 travel_dist = 0.0
-turn_dist = 0.06
+turn_dist = 0.1
 
 front_dist_min = 0.15
 
@@ -135,6 +204,7 @@ cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1) # move the robot
 scan_sub = rospy.Subscriber('scan', LaserScan, scan_callback)   # read the laser scanner
 imu_sub = rospy.Subscriber('imu', Imu, imu_callback)            # read the imu
 odom_sub = rospy.Subscriber('odom', Odometry, odom_callback)    # read odometry information
+map_sub = rospy.Subscriber('map', OccupancyGrid, map_callback)  # read map data
 
 rospy.init_node('maze_explorer',)
 
@@ -143,7 +213,7 @@ command.linear.x = 0.0
 command.angular.z = 0.0
 
 rate = rospy.Rate(10)
-time.sleep(10) # wait for node to initialize
+time.sleep(5) # wait for node to initialize
 
 state = 0
 
@@ -171,7 +241,8 @@ while not rospy.is_shutdown():
             print("all done, save the map now")
             break
 
-    
+    left_dist = get_left_dist()
+
     # State 0: Looking for wall
 
     if(state == 0):
@@ -194,14 +265,14 @@ while not rospy.is_shutdown():
     # State 1: Following Wall
 
     elif(state == 1):
-        print("Range: {:.2f}m - Following Wall".format(min_left))
+        print("Range: {:.2f}m - Following Wall".format(left_dist))
 
         if (min_front < front_dist_min):
             state = 4
             command.angular.z = 0.0
             command.linear.x = 0.0
         
-        elif (min_left > 0.2):
+        elif (left_dist > 0.2):
             state = 2
             save_position = map_position
             command.angular.z = 0.0
@@ -209,18 +280,18 @@ while not rospy.is_shutdown():
 
         else:
             ang_err = get_ang_err()
-            command.angular.z = -ang_err*kp + (min_left-0.1)*2
+            command.angular.z = -ang_err*kp
             command.linear.x = drive_vel
 
 
     # State 2: Opening on Left
 
     elif(state == 2):
-        print("Opening on left")
+        print("Range: {:.2f}m - Opening on Left".format(left_dist))
 
         travel_dist = math.sqrt(sum([(a - b) ** 2 for a, b in zip(map_position, save_position)]))
 
-        if(min_left < 0.2):
+        if(left_dist < 0.2):
             state = 1
             ang_err = get_ang_err()
             command.angular.z = -ang_err*kp
