@@ -8,7 +8,7 @@
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="0"/>
   <!-- Miscellaneous Configurations -->
-  <arg name="map_file" default="$(find fira_maze)/maps/mymap.yaml"/>
+  <arg name="map_file" default="$(find fira_maze)/maps/part_2_map.yaml"/>
   <arg name="open_rviz" default="true"/>
   <!-- Initialize Gazebo -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -26,7 +26,6 @@
   <!-- Publish robot state to rviz -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
   <!-- Keep track of frame transforms -->
-  <node pkg="tf" type="static_transform_publisher" name="camera_tf" args="-1.95 -0.55 2.0 -1.58 0 -1.58 /odom /camera 100"/>
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
   <!-- AMCL -->
