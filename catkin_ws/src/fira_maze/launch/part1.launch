@@ -29,7 +29,12 @@
   <!-- Launch RViz with correct format -->
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find fira_maze)/rviz/part1.rviz" />
 
+<<<<<<< HEAD
   <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_4.py" output="screen"/>
+=======
+  <!-- Maze Explorer Controller -->
+  <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_2.py" output="screen"/>
+>>>>>>> 711f9f10da673d3fe2fde626961704f0e8fdcaf7
 
   <!-- Gmapping -->
   <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">

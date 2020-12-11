@@ -214,4 +214,4 @@ while not rospy.is_shutdown():
 
 ### INSERT CODE HERE FOR SAVING THE MAP ###
 rospy.loginfo('Saving map!')
-os.open('rosrun map_server map_saver -f $(rospack find fira_maze)/maps/part_2_map')
+os.system('rosrun map_server map_saver -f $(rospack find fira_maze)/maps/part_1_complete_map')
