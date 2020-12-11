@@ -5115,9 +5115,9 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>1.45964 2.43047 19.8 0 1.42987 -2.62799</pose>
+        <pose>0 0 1 0 1.57 0</pose>
         <view_controller>orbit</view_controller>
-        <projection_type>perspective</projection_type>
+        <projection_type>orthographic</projection_type>
       </camera>
     </gui>
     <model name='Maze_L_RU'>
