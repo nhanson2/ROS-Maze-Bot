@@ -171,6 +171,7 @@ while not rospy.is_shutdown():
             print("all done, save the map now")
             break
 
+    rospy.loginfo_throttle(2,f'Range left: {range_left}')
     
     # State 0: Looking for wall
 
@@ -224,7 +225,7 @@ while not rospy.is_shutdown():
             state = 1
             ang_err = get_ang_err()
             command.angular.z = -ang_err*kp
-            command.linear.x = drive_vel
+            command.linear.x = drive_vel*0.5
 
         elif(travel_dist < turn_dist and min_front > front_dist_min):
             ang_err = get_ang_err()

@@ -9,7 +9,7 @@
   <arg name="yaw" default="1.5708"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find fira_maze)/worlds/maze_2.world"/>
+    <arg name="world_name" value="$(find fira_maze)/worlds/maze_4.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
@@ -29,12 +29,8 @@
   <!-- Launch RViz with correct format -->
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find fira_maze)/rviz/part1.rviz" />
 
-<<<<<<< HEAD
-  <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_4.py" output="screen"/>
-=======
   <!-- Maze Explorer Controller -->
-  <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_2.py" output="screen"/>
->>>>>>> 711f9f10da673d3fe2fde626961704f0e8fdcaf7
+  <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_3.py" output="screen"/>
 
   <!-- Gmapping -->
   <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
