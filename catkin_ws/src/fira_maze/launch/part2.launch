@@ -15,7 +15,7 @@
     <arg name="world_name" value="$(find fira_maze)/worlds/maze_2.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
+    <arg name="gui" value="false"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
   </include>
@@ -26,6 +26,7 @@
   <!-- Publish robot state to rviz -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
   <!-- Keep track of frame transforms -->
+  <node pkg="tf" type="static_transform_publisher" name="camera_tf" args="-1.95 -0.55 2.0 -1.58 0 -1.58 /odom /camera 100"/>
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
   <!-- AMCL -->
