@@ -17,15 +17,12 @@
      respawn="false" output="screen" />
 
     <node pkg="robot_state_publisher" type="robot_state_publisher"
-          name="robot_state_publisher_$(arg number)" output="screen" ns="$(arg robot_name)_tf"/>
+          name="robot_state_publisher_$(arg number)" output="screen"/>
 
     <node name="$(arg robot_name)_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
 
     <!-- Gmapping -->
-    <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
-        <remap from="scan" to="/$(arg robot_name)/scan" />
-        <remap from="map" to="/gmapping/map_$(arg number)" />
-        <remap from="map_metadata" to="/gmapping/metadata_$(arg number)" />
+    <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen" ns="$(arg robot_name)">
         <param name="base_frame" value="base_footprint"/>
         <param name="odom_frame" value="odom"/>
         <param name="map_update_interval" value="2.0"/>
