@@ -12,27 +12,16 @@
 
     <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
-    <node name="spawn_turtlebot" pkg="gazebo_ros" type="spawn_model"
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
      args="-urdf -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -param /$(arg robot_name)/robot_description -model $(arg robot_name)"
      respawn="false" output="screen" />
-
-    <node pkg="robot_state_publisher" type="robot_state_publisher"
-          name="robot_state_publisher" output="screen">
-        <param name="tf_prefix" value="$(arg robot_name)_tf"/>
-    </node>
-
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-        <param name="tf_prefix" value="/$(arg robot_name)_tf"/>
-    </node>
-    <node pkg="tf" type="static_transform_publisher" name="scan_forwarder2" args="0 0 0 0 0 0 /$(arg robot_name)_tf/odom /$(arg robot_name)_tf/base_link 100" />
-
-    
+  
     <!-- Gmapping -->
     <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
         <remap from="scan" to="/$(arg robot_name)/scan" />
 
-        <param name="base_frame" value="/$(arg robot_name)_tf/base_footprint"/>
-        <param name="odom_frame" value="/$(arg robot_name)_tf/odom"/>
+        <param name="base_frame" value="base_footprint"/>
+        <param name="odom_frame" value="odom"/>
         <param name="map_update_interval" value="2.0"/>
         <param name="maxUrange" value="4.0"/>
         <param name="minimumScore" value="100"/>

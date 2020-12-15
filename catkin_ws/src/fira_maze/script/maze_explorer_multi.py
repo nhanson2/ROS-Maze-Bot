@@ -9,6 +9,8 @@ from nav_msgs.msg import Odometry
 from std_msgs.msg import String
 from tf.transformations import euler_from_quaternion
 
+map_position = ()
+
 def scan_callback(msg):
     global range_front
     global range_right
