@@ -88,7 +88,7 @@ def turn_right():
     if(des_ang < -math.pi):
         des_ang = des_ang + (2*math.pi)
     
-    go_to_ang((0.0))
+    go_to_ang(-0.03)
 
 def turn_left():
     global des_ang
@@ -98,7 +98,7 @@ def turn_left():
     if(des_ang > math.pi):
         des_ang = des_ang - (2*math.pi)
     
-    go_to_ang(0.0)
+    go_to_ang(0.08)
 
     
 
@@ -124,9 +124,9 @@ err_tolerance = 0.1
 
 save_position = (0.0, 0.0)
 travel_dist = 0.0
-turn_dist = 0.06
+turn_dist = 0.0
 
-front_dist_min = 0.15
+front_dist_min = 0.16
 
 drive_vel = 0.05
 
@@ -171,7 +171,7 @@ while not rospy.is_shutdown():
             print("all done, save the map now")
             break
 
-    rospy.loginfo_throttle(2,f'Range left: {range_left}')
+    #rospy.loginfo_throttle(2,f'Range left: {range_left}')
     
     # State 0: Looking for wall
 
@@ -211,6 +211,8 @@ while not rospy.is_shutdown():
         else:
             ang_err = get_ang_err()
             command.angular.z = -ang_err*kp + (min_left-0.1)*2
+            if(min_right < 0.15):
+                command.angular.z = command.angular.z - (min_right-0.15)*3
             command.linear.x = drive_vel
 
 
@@ -273,7 +275,7 @@ while not rospy.is_shutdown():
 
     elif(state == 4):
         print("Front obstacle detected")
-        if(min_front < 0.13):
+        if(min_front < 0.15):
             command.angular.z = 0.0
             command.linear.x = -0.03
 
