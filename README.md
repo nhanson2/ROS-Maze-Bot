@@ -7,16 +7,17 @@ A Robot that solves mazes. What's not to love?
 ## Installation
 
 System Specifications
-* Ubuntu 20.0.4 Focal Fossa
-* ROS Neotic (Latest)
+* Ubuntu 18.04.5 LTS. Release: 18.04 "bionic"
+* ROS Melodic (Latest)
 
 Package Dependencies
-* slam_gmapping     $ sudo apt install ros-noetic-slam-gmapping
-* map_server        $ sudo apt install ros-noetic-map-server
-* amcl              $ sudo apt install ros-noetic-amcl
+* slam_gmapping     $ sudo apt install ros-melodic-slam-gmapping
+* map_server        $ sudo apt install ros-melodic-map-server
+* amcl              $ sudo apt install ros-melodic-amcl
+* navigation        $ sudo apt-get install ros-melodic-navigation
 
 ```
-source /opt/ros/noetic/setup.bash 
+source /opt/ros/melodic/setup.bash 
 cd ~/ROS-Maze-Bot/catkin_ws
 catkin_make
 export TURTLEBOT3_MODEL=burger
