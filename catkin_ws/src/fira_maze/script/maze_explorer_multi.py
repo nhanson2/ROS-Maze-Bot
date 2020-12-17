@@ -1,5 +1,18 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
+from __future__ import nested_scopes
+from __future__ import generators
+
+# 5 / 2 == 2.5 instead of 2
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import with_statement
+
+# print('hello') instead of print 'hello'
+from __future__ import print_function
+
+# because '{}' is now unicode
+from __future__ import unicode_literals
 import os
 import rospy, time, math
 from geometry_msgs.msg import Twist
@@ -173,7 +186,7 @@ while not rospy.is_shutdown():
             print("all done, save the map now")
             break
 
-    rospy.loginfo_throttle(2,f'Range left: {range_left}')
+    rospy.loginfo_throttle(2,'Range left: {}'.format(range_left))
     
     # State 0: Looking for wall
 
