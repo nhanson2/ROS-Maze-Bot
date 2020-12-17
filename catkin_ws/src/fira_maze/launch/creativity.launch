@@ -36,9 +36,9 @@
      <!-- Maze Explorer Controller -->
     <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_multi.py" output="screen" />
     <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
-        <remap from="scan" to="$(arg first_tb3)/scan" />
-        <param name="base_frame" value="base_footprint"/>
-        <param name="odom_frame" value="odom"/>
+        <param name="map" value="$/(arg first_tb3)/map" />
+        <param name="base_frame" value="/$(arg first_tb3)/base_footprint"/>
+        <param name="odom_frame" value="/$(arg first_tb3)/odom"/>
         <param name="map_update_interval" value="2.0"/>
         <param name="maxUrange" value="4.0"/>
         <param name="minimumScore" value="100"/>
@@ -84,9 +84,9 @@
     <!-- Maze Explorer Controller -->
     <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_multi.py" output="screen" />
       <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
-          <remap from="scan" to="$(arg first_tb3)/scan" />
-          <param name="base_frame" value="base_footprint"/>
-          <param name="odom_frame" value="odom"/>
+          <param name="map" value="/$(arg second_tb3)/map" />
+          <param name="base_frame" value="/$(arg second_tb3)/base_footprint"/>
+          <param name="odom_frame" value="/$(arg second_tb3)/odom"/>
           <param name="map_update_interval" value="2.0"/>
           <param name="maxUrange" value="4.0"/>
           <param name="minimumScore" value="100"/>
