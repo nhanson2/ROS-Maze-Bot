@@ -46,16 +46,16 @@ namespace combine_grids
 {
 namespace internal
 {
-static inline cv::Ptr<cv::Feature2D>
+static inline cv::Ptr<cv::detail::FeaturesFinder>
 chooseFeatureFinder(FeatureType type)
 {
   switch (type) {
     case FeatureType::AKAZE:
-      return cv::AKAZE::create();
+      return cv::makePtr<cv::detail::AKAZEFeaturesFinder>();
     case FeatureType::ORB:
-      return cv::ORB::create();
-    //case FeatureType::SURF:
-    //  return cv::xfeatures2d::SURF::create();
+      return cv::makePtr<cv::detail::OrbFeaturesFinder>();
+    case FeatureType::SURF:
+      return cv::makePtr<cv::detail::SurfFeaturesFinder>();
   }
 }
 
