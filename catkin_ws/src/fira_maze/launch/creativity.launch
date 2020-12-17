@@ -5,9 +5,9 @@
   <arg name="second_tb3" default="tb3_1"/>
 
   <arg name="first_tb3_x_pos" default="-1.35"/>
-  <arg name="first_tb3_y_pos" default="-1.05"/>
+  <arg name="first_tb3_y_pos" default="-0.80"/>
   <arg name="first_tb3_z_pos" default=" 0.0"/>
-  <arg name="first_tb3_yaw"   default="-1.57"/>
+  <arg name="first_tb3_yaw"   default="-3.14159"/>
 
   <arg name="second_tb3_x_pos" default="1.35"/>
   <arg name="second_tb3_y_pos" default="1.32"/>
@@ -19,7 +19,7 @@
     <arg name="world_name" value="$(find fira_maze)/worlds/maze_4.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="false"/>
+    <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
   </include>
@@ -27,7 +27,6 @@
   <!-- Robot #1 -->
   <group ns = "$(arg first_tb3)">
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
-
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
       <param name="publish_frequency" type="double" value="50.0" />
       <param name="tf_prefix" value="$(arg first_tb3)" />
@@ -35,105 +34,18 @@
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg first_tb3) -x $(arg first_tb3_x_pos) -y $(arg first_tb3_y_pos) -z $(arg first_tb3_z_pos) -Y $(arg first_tb3_yaw) -param robot_description" />
      <!-- Maze Explorer Controller -->
     <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_multi.py" output="screen" />
-    <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
-        <param name="map" value="$/(arg first_tb3)/map" />
-        <param name="base_frame" value="/$(arg first_tb3)/base_footprint"/>
-        <param name="odom_frame" value="/$(arg first_tb3)/odom"/>
-        <param name="map_update_interval" value="2.0"/>
-        <param name="maxUrange" value="4.0"/>
-        <param name="minimumScore" value="100"/>
-        <param name="linearUpdate" value="0.2"/>
-        <param name="angularUpdate" value="0.2"/>
-        <param name="temporalUpdate" value="0.5"/>
-        <param name="delta" value="0.01"/>
-        <param name="lskip" value="0"/>
-        <param name="particles" value="120"/>
-        <param name="sigma" value="0.05"/>
-        <param name="kernelSize" value="1"/>
-        <param name="lstep" value="0.05"/>
-        <param name="astep" value="0.05"/>
-        <param name="iterations" value="5"/>
-        <param name="lsigma" value="0.075"/>
-        <param name="ogain" value="3.0"/>
-        <param name="srr" value="0.01"/>
-        <param name="srt" value="0.02"/>
-        <param name="str" value="0.01"/>
-        <param name="stt" value="0.02"/>
-        <param name="resampleThreshold" value="0.5"/>
-        <param name="xmin" value="-2.0"/>
-        <param name="ymin" value="-2.0"/>
-        <param name="xmax" value="2.0"/>
-        <param name="ymax" value="2.0"/>
-        <param name="llsamplerange" value="0.01"/>
-        <param name="llsamplestep" value="0.01"/>
-        <param name="lasamplerange" value="0.005"/>
-        <param name="lasamplestep" value="0.005"/>
-    </node>
   </group>
 
   <!-- Robot #2 -->
   <group ns = "$(arg second_tb3)">
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
-
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
       <param name="publish_frequency" type="double" value="50.0" />
       <param name="tf_prefix" value="$(arg second_tb3)" />
     </node>
-
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg second_tb3) -x $(arg second_tb3_x_pos) -y $(arg second_tb3_y_pos) -z $(arg second_tb3_z_pos) -Y $(arg second_tb3_yaw) -param robot_description" />
-    <!-- Maze Explorer Controller -->
-    <node pkg="fira_maze" name="maze_explorer" type="maze_explorer_multi.py" output="screen" />
-      <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
-          <param name="map" value="/$(arg second_tb3)/map" />
-          <param name="base_frame" value="/$(arg second_tb3)/base_footprint"/>
-          <param name="odom_frame" value="/$(arg second_tb3)/odom"/>
-          <param name="map_update_interval" value="2.0"/>
-          <param name="maxUrange" value="4.0"/>
-          <param name="minimumScore" value="100"/>
-          <param name="linearUpdate" value="0.2"/>
-          <param name="angularUpdate" value="0.2"/>
-          <param name="temporalUpdate" value="0.5"/>
-          <param name="delta" value="0.01"/>
-          <param name="lskip" value="0"/>
-          <param name="particles" value="120"/>
-          <param name="sigma" value="0.05"/>
-          <param name="kernelSize" value="1"/>
-          <param name="lstep" value="0.05"/>
-          <param name="astep" value="0.05"/>
-          <param name="iterations" value="5"/>
-          <param name="lsigma" value="0.075"/>
-          <param name="ogain" value="3.0"/>
-          <param name="srr" value="0.01"/>
-          <param name="srt" value="0.02"/>
-          <param name="str" value="0.01"/>
-          <param name="stt" value="0.02"/>
-          <param name="resampleThreshold" value="0.5"/>
-          <param name="xmin" value="-2.0"/>
-          <param name="ymin" value="-2.0"/>
-          <param name="xmax" value="2.0"/>
-          <param name="ymax" value="2.0"/>
-          <param name="llsamplerange" value="0.01"/>
-          <param name="llsamplestep" value="0.01"/>
-          <param name="lasamplerange" value="0.005"/>
-          <param name="lasamplestep" value="0.005"/>
-      </node>
+      <!-- Maze Explorer Controller -->
+    <node pkg="fira_maze" name="maze_explorer_2" type="maze_explorer_multi_2.py" output="screen" />
   </group>
-  
-  <!-- Launch RViz with correct format -->
-  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find fira_maze)/rviz/creative.rviz" />
 
-  <!-- Launch node to merge map topics -->
-  <group ns="map_merge">
-    <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
-      <param name="robot_map_topic" value="map"/>
-      <param name="robot_namespace" value=""/>
-      <param name="merged_map_topic" value="map_merged"/>
-      <param name="world_frame" value="world"/>
-      <param name="known_init_poses" value="false"/>
-      <param name="merging_rate" value="0.5"/>
-      <param name="discovery_rate" value="0.05"/>
-      <param name="estimation_rate" value="0.1"/>
-      <param name="estimation_confidence" value="1.0"/>
-    </node>
-  </group>
 </launch>

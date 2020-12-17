@@ -146,12 +146,12 @@ front_dist_min = 0.15
 drive_vel = 0.05
 
 # Create the node
-cmd_vel_pub = rospy.Publisher('/tb3_0/cmd_vel', Twist, queue_size = 1) # move the robot
-scan_sub = rospy.Subscriber('/tb3_0/scan', LaserScan, scan_callback)   # read the laser scanner
-imu_sub = rospy.Subscriber('/tb3_0/imu', Imu, imu_callback)            # read the imu
-odom_sub = rospy.Subscriber('/tb3_0/odom', Odometry, odom_callback)    # read odometry information
+cmd_vel_pub = rospy.Publisher('/tb3_1/cmd_vel', Twist, queue_size = 1) # move the robot
+scan_sub = rospy.Subscriber('/tb3_1/scan', LaserScan, scan_callback)   # read the laser scanner
+imu_sub = rospy.Subscriber('/tb3_1/imu', Imu, imu_callback)            # read the imu
+odom_sub = rospy.Subscriber('/tb3_1/odom', Odometry, odom_callback)    # read odometry information
 
-rospy.init_node('maze_explorer')
+rospy.init_node('maze_explorer2')
 
 command = Twist()
 command.linear.x = 0.0
