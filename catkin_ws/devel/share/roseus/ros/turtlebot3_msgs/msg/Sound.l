@@ -30,17 +30,6 @@
 (intern "*BUTTON2*" (find-package "TURTLEBOT3_MSGS::SOUND"))
 (shadow '*BUTTON2* (find-package "TURTLEBOT3_MSGS::SOUND"))
 (defconstant turtlebot3_msgs::Sound::*BUTTON2* 5)
-
-(defun turtlebot3_msgs::Sound-to-symbol (const)
-  (cond
-        ((= const 0) 'turtlebot3_msgs::Sound::*OFF*)
-        ((= const 1) 'turtlebot3_msgs::Sound::*ON*)
-        ((= const 2) 'turtlebot3_msgs::Sound::*LOW_BATTERY*)
-        ((= const 3) 'turtlebot3_msgs::Sound::*ERROR*)
-        ((= const 4) 'turtlebot3_msgs::Sound::*BUTTON1*)
-        ((= const 5) 'turtlebot3_msgs::Sound::*BUTTON2*)
-        (t nil)))
-
 (defclass turtlebot3_msgs::Sound
   :super ros::object
   :slots (_value ))

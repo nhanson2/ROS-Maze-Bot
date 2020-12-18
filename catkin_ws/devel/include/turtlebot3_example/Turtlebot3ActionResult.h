@@ -102,16 +102,6 @@ namespace message_traits
 
 
 template <class ContainerAllocator>
-struct IsMessage< ::turtlebot3_example::Turtlebot3ActionResult_<ContainerAllocator> >
-  : TrueType
-  { };
-
-template <class ContainerAllocator>
-struct IsMessage< ::turtlebot3_example::Turtlebot3ActionResult_<ContainerAllocator> const>
-  : TrueType
-  { };
-
-template <class ContainerAllocator>
 struct IsFixedSize< ::turtlebot3_example::Turtlebot3ActionResult_<ContainerAllocator> >
   : FalseType
   { };
@@ -119,6 +109,16 @@ struct IsFixedSize< ::turtlebot3_example::Turtlebot3ActionResult_<ContainerAlloc
 template <class ContainerAllocator>
 struct IsFixedSize< ::turtlebot3_example::Turtlebot3ActionResult_<ContainerAllocator> const>
   : FalseType
+  { };
+
+template <class ContainerAllocator>
+struct IsMessage< ::turtlebot3_example::Turtlebot3ActionResult_<ContainerAllocator> >
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsMessage< ::turtlebot3_example::Turtlebot3ActionResult_<ContainerAllocator> const>
+  : TrueType
   { };
 
 template <class ContainerAllocator>

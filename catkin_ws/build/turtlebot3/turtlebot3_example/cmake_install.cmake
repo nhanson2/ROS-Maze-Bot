@@ -78,15 +78,15 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  execute_process(COMMAND "/usr/bin/python3" -m compileall "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/lib/python3/dist-packages/turtlebot3_example")
+  execute_process(COMMAND "/usr/bin/python2" -m compileall "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/lib/python2.7/dist-packages/turtlebot3_example")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/lib/python3/dist-packages/turtlebot3_example" REGEX "/\\_\\_init\\_\\_\\.py$" EXCLUDE REGEX "/\\_\\_init\\_\\_\\.pyc$" EXCLUDE)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/lib/python2.7/dist-packages/turtlebot3_example" REGEX "/\\_\\_init\\_\\_\\.py$" EXCLUDE REGEX "/\\_\\_init\\_\\_\\.pyc$" EXCLUDE)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/lib/python3/dist-packages/turtlebot3_example" FILES_MATCHING REGEX "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/lib/python3/dist-packages/turtlebot3_example/.+/__init__.pyc?$")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/lib/python2.7/dist-packages/turtlebot3_example" FILES_MATCHING REGEX "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/lib/python2.7/dist-packages/turtlebot3_example/.+/__init__.pyc?$")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

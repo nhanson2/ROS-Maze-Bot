@@ -47,22 +47,6 @@
 (intern "*TORQUE_OFF*" (find-package "TURTLEBOT3_MSGS::SENSORSTATE"))
 (shadow '*TORQUE_OFF* (find-package "TURTLEBOT3_MSGS::SENSORSTATE"))
 (defconstant turtlebot3_msgs::SensorState::*TORQUE_OFF* 2)
-
-(defun turtlebot3_msgs::SensorState-to-symbol (const)
-  (cond
-        ((= const 1) 'turtlebot3_msgs::SensorState::*BUMPER_FORWARD*)
-        ((= const 2) 'turtlebot3_msgs::SensorState::*BUMPER_BACKWARD*)
-        ((= const 1) 'turtlebot3_msgs::SensorState::*CLIFF*)
-        ((= const 1) 'turtlebot3_msgs::SensorState::*SONAR*)
-        ((= const 1) 'turtlebot3_msgs::SensorState::*ILLUMINATION*)
-        ((= const 1) 'turtlebot3_msgs::SensorState::*BUTTON0*)
-        ((= const 2) 'turtlebot3_msgs::SensorState::*BUTTON1*)
-        ((= const 1) 'turtlebot3_msgs::SensorState::*ERROR_LEFT_MOTOR*)
-        ((= const 2) 'turtlebot3_msgs::SensorState::*ERROR_RIGHT_MOTOR*)
-        ((= const 1) 'turtlebot3_msgs::SensorState::*TORQUE_ON*)
-        ((= const 2) 'turtlebot3_msgs::SensorState::*TORQUE_OFF*)
-        (t nil)))
-
 (defclass turtlebot3_msgs::SensorState
   :super ros::object
   :slots (_header _bumper _cliff _sonar _illumination _led _button _torque _left_encoder _right_encoder _battery ))
@@ -121,8 +105,8 @@
    (&optional __button)
    (if __button (setq _button __button)) _button)
   (:torque
-   (&optional (__torque :null))
-   (if (not (eq __torque :null)) (setq _torque __torque)) _torque)
+   (&optional __torque)
+   (if __torque (setq _torque __torque)) _torque)
   (:left_encoder
    (&optional __left_encoder)
    (if __left_encoder (setq _left_encoder __left_encoder)) _left_encoder)

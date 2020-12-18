@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/gennodejs/ros/turtlebot3_msgs/msg/SensorState.js"
-  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/gennodejs/ros/turtlebot3_msgs/msg/Sound.js"
-  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/gennodejs/ros/turtlebot3_msgs/msg/VersionInfo.js"
   "CMakeFiles/turtlebot3_msgs_generate_messages_nodejs"
+  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/gennodejs/ros/turtlebot3_msgs/msg/VersionInfo.js"
+  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/gennodejs/ros/turtlebot3_msgs/msg/Sound.js"
+  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/gennodejs/ros/turtlebot3_msgs/msg/SensorState.js"
 )
 
 # Per-language clean rules from dependency scanning.

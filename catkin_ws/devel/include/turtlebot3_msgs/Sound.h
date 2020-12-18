@@ -127,22 +127,22 @@ namespace message_traits
 
 
 template <class ContainerAllocator>
-struct IsMessage< ::turtlebot3_msgs::Sound_<ContainerAllocator> >
-  : TrueType
-  { };
-
-template <class ContainerAllocator>
-struct IsMessage< ::turtlebot3_msgs::Sound_<ContainerAllocator> const>
-  : TrueType
-  { };
-
-template <class ContainerAllocator>
 struct IsFixedSize< ::turtlebot3_msgs::Sound_<ContainerAllocator> >
   : TrueType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::turtlebot3_msgs::Sound_<ContainerAllocator> const>
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsMessage< ::turtlebot3_msgs::Sound_<ContainerAllocator> >
+  : TrueType
+  { };
+
+template <class ContainerAllocator>
+struct IsMessage< ::turtlebot3_msgs::Sound_<ContainerAllocator> const>
   : TrueType
   { };
 

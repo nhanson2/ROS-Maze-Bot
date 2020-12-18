@@ -1,11 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-
-import typing
-from typing import Dict
 import math
-import tkinter as tk
-from tkinter import simpledialog
+#import tkinter as tk
+#from tkinter import simpledialog
 import rospy, time, math
 from geometry_msgs.msg import Twist, PoseWithCovarianceStamped, PoseStamped
 import actionlib
@@ -29,7 +26,7 @@ Purpose:
 '''
 
 class Navigator:
-    def __init__(self) -> None:
+    def __init__(self):
         self.goal = None
         self.waypoints = []
         self.state = 'waiting'
@@ -49,7 +46,7 @@ class Navigator:
         self.rate = rospy.Rate(10)
         self.status = 'waiting'
 
-    def set_global_goal(self, msg: goal) -> None:
+    def set_global_goal(self, msg):
         rospy.loginfo('Received new goal on /goal topic')
         # Set new goal
         print(msg)
@@ -62,7 +59,7 @@ class Navigator:
         self.set_nav_goal()
         rospy.sleep(1)
 
-    def distance(self, currMsg: Dict, prevMsg: Dict) -> float:
+    def distance(self, currMsg, prevMsg):
         if not prevMsg:
             # Return a large number since this is our first waypoint to track
             return 10000
@@ -70,7 +67,7 @@ class Navigator:
         return math.sqrt((currMsg.position.x - prevMsg.position.x)**2 + (currMsg.position.y - prevMsg.position.y)**2)
 
 
-    def update_pose(self, msg: PoseWithCovarianceStamped) -> None:
+    def update_pose(self, msg):
         if self.status == 'nav_goal' and (rospy.Time.now() - self._last_heard).to_sec() > 2.0:
             # Check distance from previous position to keep us from appending multiple redundant waypoints
             if not self.waypoints or self.distance(msg.pose.pose, self.waypoints[-1]) > 0.1:
@@ -82,7 +79,7 @@ class Navigator:
             else:
                 rospy.logwarn('Distance is too small to append')
 
-    def get_goal(self) -> None:
+    def get_goal(self):
         valid = False
         while not valid:
             ROOT = tk.Tk()
@@ -92,14 +89,14 @@ class Navigator:
                                             prompt="Enter two floats in range (-2, 2) seperated by a space")
             x, y = [float(z) for z in USER_INP.split()]
             if -2 <= x <= 2 and -2 <= y <= 2:
-                rospy.loginfo(f'Accepted -> x: {x}, y {y}')
+                rospy.loginfo('Accepted -> x: {}, y {}'.format(x,y))
                 # Set new goal
                 self.goal = (x,y)
                 # Clear intermediary waypoints
                 self.waypoints = []
                 valid = True
     
-    def set_nav_goal(self) -> None:
+    def set_nav_goal(self):
         toSend = PoseStamped()
         toSend.header.frame_id = "map"
         toSend.header.stamp = rospy.Time.now()
@@ -108,7 +105,7 @@ class Navigator:
         toSend.pose.orientation.w = 1.0
         self.goal_pub.publish(toSend)
 
-    def set_nav_goal_reverse(self) -> None:
+    def set_nav_goal_reverse(self):
         if len(self.waypoints) == 0 and self.status == 'reversing':
             rospy.loginfo('Completed traversing through previous waypoints')
             self.status = 'waiting'
@@ -139,7 +136,7 @@ class Navigator:
         rospy.sleep(1)
 
 
-    def get_status(self, msg: GoalStatusArray) -> None:
+    def get_status(self, msg):
         if self.status == 'nav_goal' and msg.status_list[-1].status == 3:
             # Check the distance to this goal
             rospy.loginfo('At goal')

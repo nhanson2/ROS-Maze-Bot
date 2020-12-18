@@ -70,9 +70,9 @@ class VersionInfo {
 
   static getMessageSize(object) {
     let length = 0;
-    length += _getByteLength(object.hardware);
-    length += _getByteLength(object.firmware);
-    length += _getByteLength(object.software);
+    length += object.hardware.length;
+    length += object.firmware.length;
+    length += object.software.length;
     return length + 12;
   }
 

@@ -48,7 +48,7 @@ class Turtlebot3Result {
 
   static getMessageSize(object) {
     let length = 0;
-    length += _getByteLength(object.result);
+    length += object.result.length;
     return length + 4;
   }
 

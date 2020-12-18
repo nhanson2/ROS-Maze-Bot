@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/common-lisp/ros/turtlebot3_msgs/msg/SensorState.lisp"
-  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/common-lisp/ros/turtlebot3_msgs/msg/Sound.lisp"
-  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/common-lisp/ros/turtlebot3_msgs/msg/VersionInfo.lisp"
   "CMakeFiles/turtlebot3_msgs_generate_messages_lisp"
+  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/common-lisp/ros/turtlebot3_msgs/msg/VersionInfo.lisp"
+  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/common-lisp/ros/turtlebot3_msgs/msg/Sound.lisp"
+  "/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/share/common-lisp/ros/turtlebot3_msgs/msg/SensorState.lisp"
 )
 
 # Per-language clean rules from dependency scanning.
