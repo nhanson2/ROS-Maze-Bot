@@ -61,7 +61,10 @@ git push
 ## Reporting
 
 Compiled using TeXworks Version 0.6.5 (MiKTeX 20.7) and following the ICRA formatting guidelines found at the following link: http://ras.papercept.net/conferences/support/tex.php
-root.tex is the report TeX file. The generated pdf document can be viewed with any appropriate pdf viewer.
+Final editing was done in Overleaf. The final report is completed as a .pdf and can be found in the root directory.
+
+## Presentation
+Our video presentation can be found at the following link: https://youtu.be/OeK8udU62_8
 
 ## Status Updates
 
