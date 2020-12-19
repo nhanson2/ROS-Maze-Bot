@@ -8,28 +8,35 @@ A Robot that solves mazes. What's not to love?
 
 System Specifications
 * Ubuntu 18.04.5 LTS. Release: 18.04 "bionic"
-* ROS Melodic (Latest)
+* ROS Melodic
 
 Package Dependencies
-* slam_gmapping     $ sudo apt install ros-melodic-slam-gmapping
-* map_server        $ sudo apt install ros-melodic-map-server
-* amcl              $ sudo apt install ros-melodic-amcl
-* navigation        $ sudo apt-get install ros-melodic-navigation
+* slam_gmapping     
+`$sudo apt install ros-melodic-slam-gmapping`
+* map_server       
+`$ sudo apt install ros-melodic-map-server`
+* amcl              
+`$ sudo apt install ros-melodic-amcl`
+* navigation       
+`$ sudo apt-get install ros-melodic-navigation`
 
 ```
 source /opt/ros/melodic/setup.bash 
 cd ~/ROS-Maze-Bot/catkin_ws
 catkin_make
 export TURTLEBOT3_MODEL=burger
-### Launch Simulation Environment/SLAM/Movement Script
-roslaunch fira_maze maze_1_world.launch
-### Launch rviz to visualize mapping
-rviz -d `rospack find turtlebot3_slam`/rviz/turtlebot3_gmapping.rviz
+### Part 1
+roslaunch fira_maze part1.launch
 
-### After mapping is complete, save the map
-# replace <map_filename> with the filename you'd like to save for the map
-rosrun map_server map_saver -f /home/ubuntu/ROS-Maze-Bot/maps/<map_filename>
-# This outputs a .pgm and a .yaml
+### Part 2
+roslaunch fira_maze part2.launch
+
+### Part 3
+roslaunch fira_maze part3.launch
+
+### Creativity Portion (Multi-Robot Mapping)
+roslaunch fira_maze creativity.launch
+
 ```
 
 ## Workflow
@@ -69,3 +76,12 @@ root.tex is the report TeX file. The generated pdf document can be viewed with a
 - Included AMCL launch file (work in progress).
 - Changed maze_1_world.launch file to incoporate SLAM and movement script.
 - Updated README.md to reflect changes.
+
+#### 12-02-2020
+- Completed part 1
+
+#### 12-07-2020
+- Completed part 2
+
+#### 12-17-2020
+- Completed creativity step (part 4)
