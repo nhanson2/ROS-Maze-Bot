@@ -1,8 +1,0 @@
-prefix=/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel
-
-Name: fira_maze
-Description: Description of fira_maze
-Version: 0.0.0
-Cflags: -I/home/nathaniel/ROS-Maze-Bot/catkin_ws/devel/include
-Libs: -L${prefix}/lib 
-Requires: message_runtime

@@ -70,7 +70,7 @@ class Navigator:
     def update_pose(self, msg):
         if self.status == 'nav_goal' and (rospy.Time.now() - self._last_heard).to_sec() > 2.0:
             # Check distance from previous position to keep us from appending multiple redundant waypoints
-            if not self.waypoints or self.distance(msg.pose.pose, self.waypoints[-1]) > 0.1:
+            if not self.waypoints or self.distance(msg.pose.pose, self.waypoints[-1]) > 0.2:
                 self._last_heard = rospy.Time.now()
                 rospy.loginfo('Accepted intermediary goal')
                 # Accept and append goal positions
