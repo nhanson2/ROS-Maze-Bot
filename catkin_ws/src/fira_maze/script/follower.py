@@ -5,6 +5,27 @@ from sensor_msgs.msg import Imu
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String
 from tf.transformations import euler_from_quaternion
+from fira_maze.msg import goal, hello
+
+def difference_detector(scan_ranges):
+    global previous_scan
+    if not previous_scan:
+        # No data to compare against, return
+        return
+    # Compare current scan to previous scan
+    changes = [abs(item[1] - item[0])for item in list(zip(scan_ranges, previous_scan))]
+    max_change = max(changes)
+    # Greater than 5 CM change detected, we've likely detected Robot M, send a message to notify
+    if max_change > 0.05
+        dist = scan_ranges[changes.index(max_change)]
+        # Construct hello message to send over the channel
+        to_send = hello()
+        if dist < 0.1:
+            # Instruct the robot to stop
+            to_send.stop = True
+        to_send.seen = True
+        to_send.distance = dist
+        comm_pub.publish(to_send)
 
 def scan_callback(msg):
     global range_front
@@ -13,7 +34,7 @@ def scan_callback(msg):
     global ranges
     global min_front, i_front, min_right, i_right, min_left, i_left
     global scan_received
-    
+    global previous_scan
     ranges = msg.ranges
     # get the range of a few points
     # in front of the robot (between 5 to -5 degrees)
@@ -29,7 +50,9 @@ def scan_callback(msg):
     min_front,i_front = min( (range_front[i_front],i_front) for i_front in range(len(range_front)) )
     min_right,i_right = min( (range_right[i_right],i_right) for i_right in range(len(range_right)) )
     min_left ,i_left  = min( (range_left [i_left ],i_left ) for i_left  in range(len(range_left )) )
-
+    # Detect if our frame of view has significantly changed
+    difference_detector(ranges)
+    previous_scan = ranges
     scan_received = True
 
 def imu_callback(msg):
@@ -78,6 +101,7 @@ i_right = 0
 min_left = 0
 i_left = 0
 scan_received = False
+previous_scan = None
 
 scan_init = []
 scan_init_sum = 0

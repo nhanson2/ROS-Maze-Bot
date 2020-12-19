@@ -14,7 +14,7 @@ from std_msgs.msg import String
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 import math
 import rospy
-from fira_maze.msg import goal
+from fira_maze.msg import goal, hello
 '''
 Purpose:
 

@@ -54,6 +54,9 @@
       <arg name="model" value="$(arg model)" />
       <arg name="move_forward_only" value="false"/>
     </include>
+
+    <!-- Controller for Robot S -->
+    <node pkg="fira_maze" name="robot_overlord" type="master.py" output="screen"/>
   </group>
 
   <!-- Lost Robot-->
@@ -71,5 +74,7 @@
     <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg robot_s) -x $(arg x_pos) -y $(arg y_pos) -Y $(arg yaw) -param robot_description" />
 
+    <!-- Controller for Robot S -->
+    <node pkg="fira_maze" name="follower" type="follower.py" output="screen"/>
   </group>
 </launch>

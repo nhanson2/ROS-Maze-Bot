@@ -42,6 +42,7 @@
           args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz"/>
   </group>
 
-   <!-- Maze Explorer Controller -->
+  <!-- Map Goal Controller -->
+  <node pkg="fira_maze" name="maze_explorer" type="navigator.py" output="screen"/>
 
 </launch>

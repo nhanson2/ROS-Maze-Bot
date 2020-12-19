@@ -6,6 +6,7 @@ from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import Imu
 from std_msgs.msg import String
 from tf.transformations import euler_from_quaternion
+from fira_maze.msg import hello
 
 def scan_callback(msg):
     global range_front
@@ -92,6 +93,23 @@ def turn_left():
     
     go_to_ang(0.0)
 
+def send_stop():
+    command = Twist()
+    command.linear.x = 0.0
+    command.angular.z = 0.0
+    cmd_vel_pub.publish(command)
+
+def distance_update(msg):
+    global distance_from_s
+    if bool(msg.seen):
+        # We have been seen by the other robot, update the distance between us
+        distance_from_s = float(msg.distance)
+    if bool(msg.stop):
+        # Robot s thinks we should stop as we are now too close
+        send_stop()
+        rospy.loginfo('Stopped near Robot S! Path planning route out of the maze')
+
+
     
 
 # Initialize all variables
@@ -108,8 +126,11 @@ i_left = 0
 yaw = 0.0
 des_ang = 0.0
 kp = 1
+distance_from_s = 10000000
 
 # Create the node
+comm_sub = rospy.Subscriber("/comm", hello, distance_update)
+comm_pub = rospy.Subscriber("/comm", hello, queue_size=1)
 cmd_vel_pub = rospy.Publisher('robot_M/cmd_vel', Twist, queue_size = 1) # move the robot
 scan_sub = rospy.Subscriber('robot_M/scan', LaserScan, scan_callback)   # read the laser scanner
 imu_sub = rospy.Subscriber('robot_M/imu', Imu, imu_callback)            # read the imu
